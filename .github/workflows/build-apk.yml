@@ -1,0 +1,63 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodlarni yuklab olish
+        uses: actions/checkout@v4
+
+      - name: Node.js o'rnatish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Java JDK 17 o'rnatish
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Paynet ikonkasini tayyorlash
+        run: |
+          mkdir -p resources
+          if [ ! -f resources/icon.png ]; then
+            pip install pillow
+            python3 -c "
+          from PIL import Image, ImageDraw, ImageFont
+          img = Image.new('RGBA', (1024, 1024), '#16a34a')
+          draw = ImageDraw.Draw(img)
+          try:
+              font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', 620)
+          except:
+              font = ImageFont.load_default()
+          draw.text((512, 500), 'P', fill='white', font=font, anchor='mm')
+          img.save('resources/icon.png')
+          "
+          fi
+
+      - name: Kutubxonalarni o'rnatish va Android loyiha yaratish
+        run: |
+          npm install
+          npm install -D @capacitor/assets
+          npx cap add android
+          npx capacitor-assets generate --android --iconBackgroundColor '#16a34a'
+          npx cap sync android
+
+      - name: Debug APK yig'ish (Build)
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Tayyor APK faylni saqlash
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
