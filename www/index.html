@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paynet maketi</title>
+<style>
+:root{--bg:#fff;--card:#eef1f4;--ink:#111;--mute:#7b8591;--green:#16a34a;--blue:#eaf4fd;--sec:#f1f3f5;--line:#e6e9ec;--out:#e7eaee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181b;--card:#22272c;--ink:#f1f3f5;--mute:#98a2ad;--blue:#1b2c3b;--sec:#1d2125;--line:#2b3138;--out:#0b0d0f}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{height:100%}
+body{font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:var(--out);color:var(--ink);display:flex;justify-content:center}
+.phone{width:100%;max-width:430px;height:100%;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
+main{flex:1;overflow-y:auto;padding:0 14px 16px}
+h1{font-size:26px;font-weight:600;padding:18px 0 14px;display:flex;justify-content:space-between;align-items:center}
+.ic{width:26px;height:26px;stroke:var(--mute);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.svc{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:26px;padding:20px 18px;margin-bottom:10px;position:relative;overflow:hidden;cursor:pointer}
+.svc .dot{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:20px;color:#fff;font-weight:700}
+.svc b{display:block;font-size:19px;font-weight:500;margin-bottom:4px}
+.svc span{font-size:15px;color:var(--mute);line-height:1.35}
+.svc .ch{margin-left:auto;flex:none}
+.new{position:absolute;left:-26px;top:12px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 30px;transform:rotate(-45deg)}
+.month{display:flex;align-items:center;gap:22px;font-size:22px;font-weight:500;padding:6px 4px 14px}
+.chips{display:flex;gap:8px;margin-bottom:14px}
+.chip{border:0;background:var(--card);color:var(--mute);font:inherit;font-size:16px;padding:12px 22px;border-radius:30px;cursor:pointer}
+.chip.f{padding:12px 16px}.chip.on{background:var(--green);color:#fff}
+.sum{background:var(--bg);box-shadow:0 2px 14px rgba(0,0,0,.08);border:1px solid var(--line);border-radius:20px;padding:14px 18px;margin-bottom:14px}
+.sum small{font-size:15px;color:var(--mute)}.sum div{font-size:30px;font-weight:600}.sum em{font-style:normal;font-size:20px;font-weight:400;color:var(--mute)}
+.mon{background:var(--blue);border-radius:22px;padding:16px 18px;margin-bottom:12px}
+.mon p{font-size:15px;line-height:1.4;margin:8px 0 14px}
+.mon .r{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:600}
+.btn{background:var(--green);color:#fff;border:0;border-radius:30px;font:inherit;font-size:20px;padding:12px 34px;cursor:pointer}
+.day{background:var(--sec);margin:0 -14px;padding:8px 14px;font-size:15px;color:var(--mute)}
+.tx{display:flex;align-items:center;gap:12px;padding:14px 0}
+.tx .a{width:54px;height:54px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff;background:#0b2d8c}
+.tx .a.g{background:var(--green);font-size:22px}.tx .a.i{background:var(--card);color:var(--green);font-size:22px}
+.tx .t{flex:1;min-width:0}.tx b{display:block;font-size:18px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx .t span{font-size:15px;color:var(--mute)}
+.tx .s{text-align:right;font-size:18px;font-weight:500}.tx .s i{display:block;font-style:normal;font-size:16px;font-weight:400;margin-top:2px}
+.pos{color:var(--green)}
+.cols{display:flex;gap:12px}.col{flex:1;display:flex;flex-direction:column;gap:12px}
+.tile{border-radius:24px;padding:16px;font-size:20px;font-weight:500;line-height:1.2;position:relative;overflow:hidden;cursor:pointer;background:var(--card)}
+.tile.big{padding-bottom:0}.tile .em{display:block;font-size:84px;line-height:1;margin:8px 0 14px;filter:saturate(.8)}
+.y{background:#fcecd0;color:#111}.bl{background:#d3e8fc;color:#111}.gr{background:#d4f1e2;color:#111}.pk{background:#fbdcdc;color:#111}.pu{background:#f4ecfd;color:#111}
+.tile.sm{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:19px;min-height:84px}
+.tile.sm .ic{width:34px;height:34px}
+.ph{display:grid;place-items:center;text-align:center;height:60%;color:var(--mute);font-size:16px;padding:0 30px;line-height:1.5}
+nav{display:flex;justify-content:space-around;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-radius:26px 26px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+nav button{background:none;border:0;font:inherit;font-size:14px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative;min-width:64px;padding:2px 0}
+nav button .ic{stroke:var(--mute);width:30px;height:30px}
+nav button.on .ic{stroke:var(--green)}
+nav button.on .p{background:var(--green);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;margin:-4px 0}
+nav button.on .p .ic{stroke:#fff;width:22px;height:22px}
+.p{display:grid;place-items:center}
+.bd{position:absolute;top:-2px;right:12px;width:12px;height:12px;border-radius:50%;background:#ef4444}
+.toast{position:absolute;left:50%;bottom:92px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1}
+main.fx{display:flex;flex-direction:column}main.fx>.fl,main.fx>.sc{flex:1 0 auto}
+.hd{margin:0 -14px;padding:16px 14px 16px;background:var(--card);border-radius:0 0 26px 26px}
+.row{display:flex;align-items:center;gap:12px}
+.av{width:48px;height:48px;border-radius:50%;background:#8a919a;display:grid;place-items:center}.av .ic{stroke:#fff;fill:#fff}
+.bdg{display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#fff;font-size:14px;padding:3px 10px;border-radius:14px;margin-top:4px}.bdg .ic{stroke:#fff;width:16px;height:16px}
+.bal{font-size:40px;font-weight:600;display:flex;justify-content:space-between;align-items:center;margin:6px 0 14px}.bal em{font-style:normal;color:var(--mute);font-size:30px;font-weight:500}.bal .ic{stroke:var(--ink)}
+.fk{background:var(--bg);border-radius:26px;padding:22px;font-size:20px;color:var(--mute);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.stories,.qks,.rec,.chs{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+.stories{margin:14px -14px 0;padding:0 14px}
+.story{flex:none;width:150px;height:140px;border-radius:20px;border:3px solid var(--green);color:#fff;font-weight:500;font-size:16px;display:flex;align-items:flex-end;padding:10px;line-height:1.2;cursor:pointer}
+.qks{margin:18px -14px 0;padding:0 14px}.qk{flex:none;width:84px;text-align:center;font-size:16px;cursor:pointer}
+.qk i{display:grid;place-items:center;height:84px;border-radius:22px;background:var(--card);font-size:40px;font-style:normal;margin-bottom:6px}
+.pn{background:var(--bg);box-shadow:0 2px 14px rgba(0,0,0,.08);border:1px solid var(--line);border-radius:26px;margin-top:16px;overflow:hidden}
+.ph2{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;font-size:24px;font-weight:600;border-bottom:1px solid var(--line)}
+.add{color:var(--green);font-size:20px;font-weight:500;display:flex;align-items:center;gap:6px}.add .ic{stroke:var(--green);width:22px;height:22px}
+.cr{display:flex;align-items:center;gap:14px;padding:12px 20px;cursor:pointer}.cr b{display:block;font-size:24px;font-weight:500}.cr small{font-size:17px;color:var(--mute)}.cr .ic{margin-left:auto}
+.cd{width:72px;height:50px;border-radius:12px;flex:none;color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+.cnt{background:var(--card);border-radius:20px;padding:2px 12px;font-size:20px;margin:0 6px}
+.cust{width:100%;border:2px solid var(--ink);border-radius:30px;background:none;color:var(--ink);font:inherit;font-size:21px;padding:18px;margin-top:16px;cursor:pointer}
+.inp{background:var(--card);border-radius:26px;padding:22px;font-size:20px;color:var(--mute);display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer}
+.inp input{flex:1;min-width:0;border:0;background:none;font:inherit;color:var(--ink);outline:0}.inp .ic{stroke:var(--ink)}
+.ban{margin-top:14px;background:#f2300c;color:#fff;border-radius:26px;padding:22px 20px;font-size:19px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.ban i{flex:none;width:46px;height:46px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-style:normal}
+.seg{display:flex;border:2px solid var(--line);border-radius:30px;padding:4px;margin:14px 0}
+.seg button{flex:1;border:0;background:none;font:inherit;font-size:19px;padding:14px;border-radius:26px;color:var(--mute);cursor:pointer}.seg button.on{background:var(--green);color:#fff}
+.rec{margin:0 -14px;padding:4px 14px 12px}
+.rc{flex:none;width:132px;height:136px;border-radius:22px;background:var(--bg);box-shadow:0 2px 12px rgba(0,0,0,.09);padding:14px;display:flex;flex-direction:column;justify-content:space-between;font-size:18px;cursor:pointer}
+.cir{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700}
+h2{font-size:32px;font-weight:600;margin:22px 0 14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ot{background:var(--card);border-radius:26px;padding:20px;cursor:pointer}.ot b{font-size:22px;font-weight:500;display:block}.ot span{font-size:18px;color:var(--mute);display:block;margin-top:6px;line-height:1.3}
+.lg{display:flex;margin-top:14px}.lg i{font-style:normal;font-size:12px;font-weight:700;color:#fff;padding:14px 12px;border-radius:8px;margin-right:-6px}
+.ln{display:flex;align-items:center;gap:14px;padding:10px 0;font-size:21px;color:var(--mute);cursor:pointer}.ln i{font-style:normal;width:56px;height:38px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px}.ln .fg{background:none;font-size:32px;width:46px}.ln .ic{margin-left:auto}
+.cw{background:var(--bg);box-shadow:0 2px 12px rgba(0,0,0,.09);border-radius:22px;padding:10px 14px;display:flex;align-items:center;gap:14px;margin-bottom:10px;cursor:pointer}.cw b{display:block;font-size:20px;font-weight:500}.cw small{font-size:17px;color:var(--mute)}.cw .ic{margin-left:auto}
+.hint{color:var(--mute);font-size:17px;padding:10px 6px}
+.hdr{display:flex;align-items:center;gap:22px;font-size:24px;font-weight:600;padding:16px 0}.hdr .ic{stroke:var(--ink);cursor:pointer}
+.wc{background:var(--bg);box-shadow:0 2px 14px rgba(0,0,0,.09);border:1px solid var(--line);border-radius:26px;padding:14px;display:flex;align-items:center;gap:14px;font-size:20px;font-weight:500}.wc small{display:block;font-size:17px;color:var(--mute);font-weight:400}.wc .ic{margin-left:auto}
+.mid{display:grid;place-items:center;height:36px}.mid .ic{stroke:var(--ink);margin:0}
+.amb{background:var(--card);border-radius:26px;padding:16px 22px;margin-top:18px}.amb small{font-size:16px;color:var(--mute)}.amb div{font-size:30px;min-height:42px}.amb div.ph0{color:var(--mute);opacity:.8}
+.cmn{font-size:16px;color:var(--mute);padding:8px 14px}
+.chs{margin:6px -14px;padding:0 14px}.chs button{flex:none;background:none;border:2px solid var(--line);border-radius:30px;padding:12px 20px;font:inherit;font-size:19px;color:var(--ink);cursor:pointer}
+.tb{margin-top:10px;border-radius:26px;padding:20px;font-size:20px;font-weight:500;background:linear-gradient(90deg,#b9e4fb,#fbe3ea);color:#111;display:flex;justify-content:space-between;align-items:center}
+.fl{display:flex;flex-direction:column;min-height:100%}
+.kp{margin:auto -14px -16px;padding:14px 8px;background:var(--sec);display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.kp button{height:54px;border-radius:28px;border:0;background:var(--bg);color:var(--ink);font:inherit;font-size:26px;cursor:pointer}.kp .rt{background:rgba(99,102,241,.2);grid-column:4;grid-row:span 2;height:auto}
+.dr small{display:block;font-size:17px;color:var(--mute);margin-top:16px}.dr div{font-size:24px}
+.okc{width:96px;height:96px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin:26px auto 22px}.okc .ic{stroke:#fff;width:50px;height:50px;stroke-width:3}
+.amn{text-align:center;font-size:58px;font-weight:600}.amn em{font-style:normal;font-size:28px;color:var(--mute);font-weight:500}
+.pl{display:block;margin:12px auto 0;width:max-content;background:var(--card);padding:10px 20px;border-radius:24px;font-size:17px}
+.pill{margin-left:auto;background:rgba(22,163,74,.14);color:var(--green);padding:14px 18px;border-radius:24px;font-size:18px}
+.cry{background:var(--card);border-radius:26px;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:22px;font-weight:600;margin-top:20px;line-height:1.2}.cry .btn{font-size:17px;padding:12px 20px;margin-top:12px}
+.acts{display:flex;justify-content:center;gap:30px;margin:auto 0 18px;padding-top:20px;text-align:center;font-size:17px}.acts div{cursor:pointer;width:130px}.acts .ic{stroke:var(--ink);width:34px;height:34px;margin-bottom:8px}
+.wide{width:100%;font-size:21px;padding:18px}
+.sc{margin:0 -14px -16px;min-height:100%;background:#0d1117;color:#fff;display:flex;flex-direction:column;align-items:center;padding:0 24px 40px}.sc .hdr{align-self:stretch}.sc .hdr .ic{stroke:#fff}
+.vf{width:230px;height:230px;margin:50px 0 24px;position:relative;border-radius:24px;border:3px solid var(--green);overflow:hidden;background:repeating-conic-gradient(#1b222c 0 25%,#151b23 0 50%) 0 0/30px 30px}
+.vf::after{content:"";position:absolute;left:0;right:0;height:3px;background:var(--green);box-shadow:0 0 12px var(--green);animation:sl 2s linear infinite alternate}
+@keyframes sl{from{top:0}to{top:calc(100% - 3px)}}
+.sc p{color:#aab2bd;text-align:center;font-size:16px;margin-bottom:26px;line-height:1.45}
+@media (prefers-reduced-motion:reduce){.vf::after{animation:none;top:50%}}
+.ic{width:22px;height:22px}nav button .ic{width:24px;height:24px}
+.tile .em{display:grid;place-items:center;width:56px;height:56px;font-size:36px;line-height:1;margin:12px 0 0;filter:none}.col:last-child .em{margin-left:auto}
+.tile.sm .ic{width:26px;height:26px}.tile.big{padding-bottom:12px}
+.qk{width:62px;font-size:13px}.qk i{height:62px;border-radius:18px;font-size:28px}
+.svc .dot{width:30px;height:30px;font-size:16px}
+.tx .a{width:44px;height:44px;font-size:10px}.tx .a.g,.tx .a.i{font-size:18px}
+.av{width:38px;height:38px}.av .ic{width:22px;height:22px}
+.cd{width:56px;height:40px;font-size:12px}.cir{width:36px;height:36px}
+.bal{font-size:30px}.bal em{font-size:22px}
+.story{width:112px;height:105px;font-size:13px}
+.fg,.ln .fg{font-size:26px;width:40px}.ln i{width:46px;height:32px;font-size:12px}
+.okc{width:76px;height:76px}.okc .ic{width:38px;height:38px}
+.acts .ic{width:28px;height:28px}.ban i{width:38px;height:38px}
+.tile .em{width:14px;height:14px;font-size:9px;margin:8px 0 0}
+.qk{width:50px;font-size:11px}.qk i{height:16px;border-radius:6px;font-size:7px;margin-bottom:4px}
+.svc .dot{width:8px;height:8px;font-size:4px}
+.tx .a{width:11px;height:11px;font-size:3px}.tx .a.g,.tx .a.i{font-size:5px}
+.av{width:10px;height:10px}.av .ic{width:6px;height:6px}
+.cd{width:14px;height:10px;font-size:3px;border-radius:3px}.cir{width:9px;height:9px;font-size:4px}
+.fg,.ln .fg{font-size:7px;width:10px}.ln i{width:12px;height:8px;font-size:3px}
+.okc{width:19px;height:19px}.okc .ic{width:10px;height:10px}.ban i{width:10px;height:10px}
+.ic,.tile.sm .ic,.acts .ic,.add .ic,.bdg .ic{width:6px;height:6px;stroke-width:2.5}nav button .ic{width:7px;height:7px}nav button.on .p .ic{width:6px;height:6px}nav button.on .p{width:12px;height:12px}
+.mid{height:14px}.hdr .ic,.bal .ic,.inp .ic{width:7px;height:7px}
+.ic,.tile.sm .ic{width:26px;height:26px}.tile.sm .ic{width:34px;height:34px}.acts .ic{width:34px;height:34px}.add .ic{width:22px;height:22px}.bdg .ic{width:16px;height:16px}.ic{stroke-width:2}
+nav button .ic{width:30px;height:30px}nav button.on .p{width:38px;height:38px}nav button.on .p .ic{width:22px;height:22px}
+.tile .em{display:block;width:auto;height:auto;font-size:84px;line-height:1;margin:8px 0 14px;filter:saturate(.8)}.col:last-child .em{margin-left:0}.tile.big{padding-bottom:0}
+.qk{width:84px}.qk i{height:84px;border-radius:22px;font-size:40px;margin-bottom:6px}
+.svc .dot{width:38px;height:38px;font-size:20px}
+.tx .a{width:54px;height:54px;font-size:12px}.tx .a.g,.tx .a.i{font-size:22px}
+.av{width:48px;height:48px}.av .ic{width:26px;height:26px}
+.cd{width:72px;height:50px;font-size:15px;border-radius:12px}.cir{width:42px;height:42px}
+.story{width:150px;height:140px}.fg,.ln .fg{font-size:32px;width:46px}.ln i{width:56px;height:38px}
+.okc{width:96px;height:96px}.okc .ic{width:50px;height:50px}.ban i{width:46px;height:46px}
+.mid{height:36px}.hdr .ic,.bal .ic,.inp .ic{width:26px;height:26px}
+h1{font-size:21px}h2{font-size:22px}
+.svc b{font-size:16px}.svc span{font-size:13px}
+.month{font-size:18px}.chip{font-size:15px}.sum small{font-size:13px}.sum div{font-size:22px}.sum em{font-size:16px}
+.mon p{font-size:13px}.mon .r{font-size:15px}.mon b{font-size:16px!important}.btn{font-size:16px}.btn.wide{font-size:17px}.day{font-size:13px}
+.tx b{font-size:16px}.tx .t span{font-size:13px}.tx .s{font-size:16px}.tx .s i{font-size:13px}
+.tile,.tile.sm{font-size:16px}nav button{font-size:12px}
+.hd b{font-size:19px!important}.hd>div[style]{font-size:14px!important}.bdg{font-size:12px}.bal{font-size:27px}.bal em{font-size:20px}.fk{font-size:17px}.story{font-size:12px}.qk{font-size:14px}
+.ph2{font-size:19px}.cnt{font-size:16px}.add{font-size:16px}.cr b{font-size:18px!important}.cr small{font-size:13px}.cust{font-size:16px}
+.rc{font-size:15px}.ban{font-size:15px}.seg button{font-size:16px}.inp{font-size:16px}.ot b{font-size:16px}.ot span{font-size:13px}.ln{font-size:15px}.cw b{font-size:17px}.cw small{font-size:14px}.hint{font-size:14px}
+.hdr{font-size:18px}.wc{font-size:16px}.wc small{font-size:14px}.amb small{font-size:13px}.amb div{font-size:20px}.cmn{font-size:13px}.chs button{font-size:15px}.tb{font-size:16px}
+.dr small{font-size:13px}.dr div{font-size:16px}.amn{font-size:44px}.amn em{font-size:22px}.amn[style]{font-size:34px!important}.pl{font-size:14px}.pill{font-size:15px}
+.cry{font-size:17px}.cry .btn{font-size:14px}.acts{font-size:14px}.sc p{font-size:14px}.kp button{font-size:24px}
+h1{font-size:17px}h2{font-size:18px}.svc b{font-size:13px}.svc span{font-size:11px}
+.month{font-size:15px}.chip{font-size:12px}.sum small{font-size:11px}.sum div{font-size:18px}.sum em{font-size:13px}
+.mon p{font-size:11px}.mon .r{font-size:12px}.mon b{font-size:13px!important}.btn{font-size:13px}.btn.wide{font-size:14px}.day{font-size:11px}
+.tx b{font-size:13px}.tx .t span{font-size:11px}.tx .s{font-size:13px}.tx .s i{font-size:11px}
+.tile,.tile.sm{font-size:13px}nav button{font-size:10px}
+.hd b{font-size:16px!important}.hd>div[style]{font-size:12px!important}.bdg{font-size:10px}.bal{font-size:22px}.bal em{font-size:16px}.fk{font-size:14px}.story{font-size:10px}.qk{font-size:11px}
+.ph2{font-size:16px}.cnt{font-size:13px}.add{font-size:13px}.cr b{font-size:15px!important}.cr small{font-size:11px}.cust{font-size:13px}
+.rc{font-size:12px}.ban{font-size:12px}.seg button{font-size:13px}.inp{font-size:13px}.ot b{font-size:13px}.ot span{font-size:11px}.ln{font-size:12px}.cw b{font-size:14px}.cw small{font-size:12px}.hint{font-size:12px}
+.hdr{font-size:15px}.wc{font-size:13px}.wc small{font-size:12px}.amb small{font-size:11px}.amb div{font-size:16px}.cmn{font-size:11px}.chs button{font-size:12px}.tb{font-size:13px}
+.dr small{font-size:11px}.dr div{font-size:13px}.amn{font-size:36px}.amn em{font-size:18px}.amn[style]{font-size:28px!important}.pl{font-size:12px}.pill{font-size:12px}
+.cry{font-size:14px}.cry .btn{font-size:12px}.acts{font-size:12px}.sc p{font-size:12px}.kp button{font-size:22px}
+/* real ilova o'lchamlariga moslangan (1080px = 390css) */
+main{padding:0 17.5px 16px}
+.hd,.day,.kp,.sc{margin-left:-17.5px;margin-right:-17.5px}.sc,.kp{margin-bottom:-16px}
+.stories,.qks,.rec,.chs{margin-left:-17.5px;margin-right:-17.5px;padding-left:17.5px;padding-right:17.5px}
+h1{font-size:22.5px;font-weight:600;padding:18px 19px 14px 0}
+.hdr{font-size:18px;font-weight:600;gap:23px;padding:20px 0 27px}
+.svc{padding:20px 14px 18px 22.4px;gap:21.6px;border-radius:20px;margin-bottom:8.7px}.svc .dot{width:26px;height:26px;font-size:14px}.svc b{font-size:15.5px;font-weight:500;margin-bottom:5px}.svc span{font-size:13.5px;line-height:1.68}
+.month{font-size:21px;font-weight:500;gap:17px;padding:6px 8px 12px;margin-top:5px}
+.chips{gap:9px;margin:5px 0 22px}.chip{height:35.5px;padding:0 17.5px;font-size:12.5px;border-radius:18px;display:flex;align-items:center}.chip.f{padding:0 15px}
+.sum{padding:12px 13.5px 11px;border-radius:18px;margin-bottom:18px;box-shadow:0 1px 8px rgba(0,0,0,.06)}.sum small{font-size:12px;display:block;line-height:17px}.sum div{font-size:21px;font-weight:600;line-height:30px}.sum em{font-size:16px}
+.mon{border-radius:22px;padding:14px 13.5px 12.6px;margin-bottom:18px}.mon b{font-size:13.5px!important;font-weight:600}.mon p{font-size:13px;line-height:18.4px;margin:6px 0 10px}.mon .r{font-size:14.5px;font-weight:500}.mon .btn{height:34.6px;padding:0 20px;font-size:15.5px;font-weight:500}
+.day{height:32px;display:flex;align-items:center;padding:0 17.5px;font-size:13px}
+.tx{height:69px;padding:0;gap:8.7px}.tx .a{width:43px;height:43px}.tx b{font-size:15px;font-weight:500}.tx .t span{font-size:13px}.tx .s{font-size:16px;font-weight:500}.tx .s i{font-size:14px;color:var(--ink);font-weight:400}
+.cols{gap:13.4px}.col{gap:10.8px}.tile{border-radius:17px;padding:15.6px 15.2px;font-size:16px;font-weight:500;line-height:22.7px;position:relative;overflow:hidden}
+.tile.big{height:173px}.tile:not(.big):not(.sm){height:125.7px}.tile.sm{height:78px}
+.tile .em{position:absolute;left:22px;bottom:10px;margin:0;font-size:66px;line-height:1;filter:none}.tile.big .em{font-size:80px}.col:last-child .em{left:auto;right:16px}
+.tile.sm .ic{width:44px;height:44px;margin-right:-8px}
+.av{width:34px;height:34px}.av .ic{width:20px;height:20px}
+.hd{padding:20px 17.5px 17px}.hd b{font-size:16.5px!important;font-weight:600;line-height:20px;display:block}
+.bdg{height:18.4px;font-size:11px;font-weight:500;padding:0 9px;margin-top:4px;border-radius:10px}.bdg .ic{width:12px;height:12px}
+.hd>div[style]{font-size:12.5px!important;margin-top:21px!important}
+.bal{font-size:27px;margin:8px 0 12px}.bal em{font-size:22px}
+.fk{height:62.8px;padding:0 21.7px;font-size:16px;border-radius:32px}
+.stories{gap:5px;margin-top:17px}.story{width:112px;height:108px;border-radius:15px;font-size:11.5px;line-height:15px;padding:0 13px 18px;box-shadow:inset 0 0 0 2px var(--card)}
+.qks{gap:21.7px;margin-top:17px}.qk{width:60.6px;font-size:13px}.qk i{height:60.6px;width:60.6px;border-radius:16px;font-size:32px;margin-bottom:8px}
+.pn{border-radius:22px;margin-top:13.7px}.ph2{height:56.7px;padding:0 13.4px;font-size:16px}
+.cnt{width:26px;height:26px;padding:0;display:inline-grid;place-items:center;font-size:13px;border-radius:50%}
+.add{font-size:14.5px;font-weight:500}.add .ic{width:16px;height:16px;padding:3px;box-sizing:border-box;background:var(--green);border-radius:50%;stroke:#fff}
+.cr{height:69px;padding:0 13.4px;gap:18px}.cr .cd{width:52px;height:39px;border-radius:8.7px;font-size:11px}.cr .cir{width:41px;height:41px}.cr b{font-size:16.5px!important;font-weight:500}.cr small{font-size:13px}
+.cust{height:42.6px;font-size:15.5px;font-weight:500;padding:0;margin-top:13.7px;border-width:1.5px}
+.inp{height:62.8px;padding:0 21px;font-size:16px;border-radius:32px;gap:19px}.inp .ic{width:22px;height:22px}
+.ban{height:80px;padding:0 17px;margin-top:13px;border-radius:22px;font-size:14.3px;font-weight:600;line-height:17px;position:relative;overflow:hidden}.ban span{max-width:215px;position:relative;z-index:1}.ban i{width:35px;height:35px;position:relative;z-index:1}
+.ban::after{content:"0%";position:absolute;right:56px;top:6px;font-size:76px;font-weight:800;line-height:1;color:rgba(255,255,255,.2)}
+.seg{height:44px;padding:3px;margin:13px 0 26px;border-width:1.5px}.seg button{height:100%;padding:0;font-size:13px}
+.rec{gap:9.4px;padding-top:2px;padding-bottom:0}.rc{width:108px;height:112px;border-radius:15px;padding:13px;font-size:12.5px}.cir{width:35px;height:35px}
+h2{font-size:22px;margin:30px 0 19px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr));gap:9.4px}.ot{border-radius:20px;padding:14px 13.4px 9px}.g2 .ot{height:140px;display:flex;flex-direction:column;padding:17px 13.4px 13px}.g2 .ot .lg{margin-top:auto}
+.ot b{font-size:14px;line-height:20px}.ot>b{line-height:22px}.g2 .ot b{line-height:20px}.ot span{font-size:12px;line-height:18.2px;margin-top:4px}
+.ot[style*="margin-top:12px"]{margin-top:9px!important}.ot[style*="space-between"]{height:76px;padding:0 0 0 13.4px;overflow:hidden}
+.ot>b+.ln{margin-top:9px}.lg{margin-top:0}.lg i{height:32px;padding:0 9px;display:grid;place-items:center;font-size:9px;border-radius:7px;margin-right:-3px}
+.ln{height:50px;padding:0;gap:9px;font-size:12.5px}.ln i{width:43px;height:32px;font-size:11px;border-radius:7px}.ln .fg{width:32.5px;height:32.5px;border-radius:50%;font-size:26px;display:grid;place-items:center;background:none}
+.cw{padding:8.7px;gap:9px;border-radius:22px;margin-bottom:8.7px;height:65px}.cw .cd{width:69px;height:47.6px;border-radius:11px;font-size:13px}.cw b{font-size:15.5px;font-weight:500}.cw small{font-size:14px}.hint{font-size:13px}
+.wc{height:65px;padding:8.7px;gap:9px;border-radius:22px;font-size:15.5px;font-weight:500}.wc small{font-size:14px;font-weight:400;margin-top:2px}.wc .cd{width:69px;height:47.6px;border-radius:11px;font-size:13px}
+.mid.dd{height:43px}.mid.dd .ic{width:20px;height:20px}.mid.dn{height:17px;position:relative}.mid.dn .ic{position:absolute;right:49px;top:-9px;width:35px;height:35px;padding:7px;box-sizing:border-box;background:var(--card);border-radius:11px;z-index:2}
+.amb{height:62.5px;border-radius:32px;padding:0 21.7px;margin-top:21px;display:flex;flex-direction:column;justify-content:center}.amb small{font-size:12.5px;line-height:16px}.amb div{font-size:18px;min-height:0;line-height:24px}
+.amb div::before{content:"";display:inline-block;width:1.5px;height:20px;background:var(--green);vertical-align:-4px;margin-right:1px;animation:cb 1s steps(2) infinite}@keyframes cb{50%{opacity:0}}
+.cmn{font-size:12px;padding:8px 17.7px 0;height:30px}.chs{gap:9px;margin-top:8px;margin-bottom:17px}.chs button{height:34.6px;padding:0 12px;font-size:16px;border-width:1.2px}
+.tb{height:51.6px;border-radius:16px;padding:0 13.4px;font-size:16px;font-weight:400;margin-top:0}.tb .add .ic{width:24px;height:24px;padding:6px}
+.kp{padding:8px 5px 6px;gap:5.5px;background:var(--sec)}.kp .kt{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;height:36px;padding:0 10px}.kp .kt .ic{stroke:var(--ink);fill:var(--ink)}
+.kp button{height:48.4px;border-radius:24px;font-size:28px;font-weight:400}.kp .rt{grid-row:auto;height:48.4px}
+.dr{padding-top:10px}.dr small{font-size:12.5px;margin-top:0;display:block;line-height:17px}.dr div{font-size:14.5px;line-height:20px;margin-bottom:15px}
+.fl>p{font-size:13.5px}.fl{padding-bottom:6px}.wide{height:60.6px;font-size:18px;font-weight:600;border-radius:31px;padding:0}
+.okc{width:65px;height:65px;margin:3px auto 0}.okc .ic{width:34px;height:34px}
+.amn{font-size:48px;line-height:56px;margin-top:15px;font-weight:600}.amn em{font-size:24px}
+.pl{margin-top:11px;height:33px;line-height:33px;padding:0 14px;font-size:13px;border-radius:17px}
+.pill{font-size:13px;height:46px;padding:0 20px;display:flex;align-items:center;border-radius:23px;margin-left:auto}
+.cry{height:108px;border-radius:22px;padding:0 13.4px;font-size:15.5px;line-height:23px;margin-top:34px}.cry .btn{height:28px;padding:0 14px;font-size:13.5px;margin-top:8px}
+.acts{gap:0;justify-content:center;font-size:13px;line-height:18.8px}.acts div{width:117px}
+nav{padding:12px 4px 8px}nav button{font-size:12px;font-weight:400;gap:4px}nav button.on{font-weight:600}
+nav button.on .p{width:auto;height:auto;margin:0;background:none;border-radius:0}nav button.on .p .ic{width:30px;height:30px;stroke:var(--green)}
+nav button.on[data-t="0"] .ic,nav button.on[data-t="2"] .ic,nav button.on[data-t="3"] .ic,nav button.on[data-t="4"] .ic{fill:var(--green)}nav button.on[data-t="3"] .ic path{stroke:#fff}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="phone">
+  <main id="v"></main>
+  <nav id="nav"></nav>
+  <div class="toast" id="toast">Bu maket: amal bajarilmaydi</div>
+</div>
+<script>
+const I={
+ home:'<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>',
+ swap:'<path d="M5 9h13l-3-3M19 15H6l3 3"/>',
+ wal:'<path d="M4 7h15v12H4zM4 7l12-3v3M15 13h4"/>',
+ clk:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ grid:'<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1" transform="rotate(45 17 17)"/><rect x="14" y="4" width="6" height="6" rx="1"/>',
+ srch:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+ qr:'<path d="M4 8V4h4M16 4h4v4M4 16v4h4M16 20h4v-4M8 8h3v3H8zM13 13h3v3h-3z"/>',
+ ch:'<path d="M9 5l7 7-7 7"/>',lf:'<path d="M15 5l-7 7 7 7"/>',
+ fl:'<path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2" fill="currentColor"/><circle cx="15" cy="16" r="2" fill="currentColor"/>',
+ pct:'<path d="M18 5L6 19"/><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/>',
+ bus:'<rect x="5" y="4" width="14" height="13" rx="3"/><path d="M5 11h14M8 20v-3M16 20v-3"/>',
+ cr:'<rect x="4" y="5" width="16" height="12" rx="2"/><circle cx="9" cy="16" r="4"/><path d="M9 14v2h2"/>',
+ med:'<rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 10v6M9 13h6M9 7V5h6v2"/>',
+ hg:'<path d="M7 4h10M7 20h10M8 4c0 5 8 5 8 8s-8 3-8 8M16 4c0 5-8 5-8 8"/>',
+ dots:'<circle cx="6" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="18" cy="12" r="1.5" fill="currentColor"/>'
+};
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24">${I[n]}</svg>`;
+const tabs=[['home','Asosiy'],['swap','Oʻtkazmalar'],['wal','Toʻlov'],['clk','Tarix'],['grid','Xizmatlar']];
+let tab=0,flt='hamma',scr=null;
+
+const svcs=[
+ ['#22b455','⟳','Paynet Xolis','Oʻzini oʻzi band qilganlar va YaTTlar uchun xizmat'],
+ ['#f7931a','₿','Kripto-hamyon','CityPay orqali kripto-aktivlarni sotib oling va soting'],
+ ['#f4511e','❀','Inson Uchun','Odamlarga yordam bering yoki xayriya yigʻimi uchun ariza topshiring',1],
+ ['#fff','😊','Happytel','Chet elda internetdan foydalanish uchun eSIM ulang',1],
+ ['#a3d65c','⌂','Bronla','Dacha, villa yoki shahar tashqarisidagi uyni band qiling',1],
+ ['#f0a81c','Au','Oltinga investitsiya','Oltin quymalar – ishonchli himoya va barqaror daromad']
+];
+const out=[['Bugun','UzQR','Davlat xizmatlari •7321','−6 400','07:12'],['23-noyabr','UzQR','Davlat xizmatlari •7321','−12 000','13:24'],['22-noyabr','UzQR','Davlat xizmatlari •7321','−4 000','07:58']];
+const inc=[['20-noyabr','Paynet kartam','Kartani toʻldirish • Paynet kartam','+50 000','18:06','g'],['14-noyabr','HUSAN MAMANAZAROV','Kiruvchi oʻtkazma •7321','+5 000','20:17','i'],['','ESHMAXMATOV DIYORBEK','Kiruvchi oʻtkazma •7321','+5 000','19:52','i'],['','HUSAN MAMANAZAROV','Kiruvchi oʻtkazma •7321','+10 000','19:48','i']];
+
+function tx(r,k){const p=r[3][0]==='+';const a=k==='g'?'<div class="a g">▯+</div>':k==='i'?'<div class="a i">↙</div>':k==='o'?'<div class="a i" style="color:var(--ink)">↗</div>':'<div class="a">UzQR</div>';
+ HR.push([r,CUR]);return `<div class="tx" data-a="rcp" data-v="${HR.length-1}">${a}<div class="t"><b>${r[1]}</b><span>${r[2]}</span></div><div class="s ${p?'pos':''}">${r[3]} soʻm<i>${r[4]}</i></div></div>`}
+function list(rows,isIn){HR.length=0;let h='';rows.forEach(r=>{if(r[0])CUR=r[0];if(r[0])h+=`<div class="day">${r[0]}</div>`;h+=tx(r,r[5])});return h}
+
+function hist(){
+ const incMode=flt==='tol';
+ const all=[...out.slice(0,1),...out.slice(1),...inc.slice(0,1),...inc.slice(1)];
+ const rows=incMode?inc:flt==='xar'?out:all;
+ const lab=incMode?['Noyabr oyidagi toʻldirishlar','1 070 000']:['Noyabr oyidagi xarajatlar',fmt(1088706+spent)];
+ const c=(k,t)=>`<button class="chip ${flt===k?'on':''}" data-f="${k}">${t}</button>`;
+ return `<h1>Tarix ${ic('srch')}</h1>
+ <div class="month">${ic('lf')}<span>Noyabr</span>${ic('ch')}</div>
+ <div class="chips"><button class="chip f">${ic('fl')}</button>${c('hamma','Hamma')}${c('xar','Xarajatlar')}${c('tol','Toʻldirish')}</div>
+ <div class="sum"><small>${lab[0]}</small><div>${lab[1]} <em>soʻm</em></div></div>
+ <div class="mon"><b style="font-size:20px">Karta monitoringi</b><p>Xizmatni ulab, Uzcard va Humo barcha kartalardagi operatsiyalarni tarixda koʻring</p><div class="r"><span>4 999 soʻm / oy</span><button class="btn">Ulash</button></div></div>
+ ${list(rows)}`}
+
+function pay(){
+ const T=(c,t,e,x='')=>`<div class="tile ${x} ${c}" data-a="svc" data-v="${t}">${t}<span class="em">${e}</span></div>`;
+ const S=(t,i)=>`<div class="tile sm" data-a="svc" data-v="${t}">${t}${ic(i)}</div>`;
+ return `<h1>Toʻlov <span style="display:flex;gap:18px">${ic('srch')}<span data-a="scan" style="cursor:pointer">${ic('qr')}</span></span></h1>
+ <div class="cols"><div class="col">${T('y','Mobil aloqa','📞','big')}${T('bl','Internet va TV','📶')}${T('pk','Taʼlim','🎓')}</div>
+ <div class="col"><div class="tile sm" style="min-height:60px">Hisob raqam boʻyicha toʻlov</div>${T('gr','Kommunal toʻlovlar','🏠','big')}${T('pu','Davlat xizmatlari va shtraflar','🏛','big')}</div></div>
+ <div class="cols" style="margin-top:12px"><div class="col">${S('Muddatli toʻlovlar','pct')}${S('Kredit toʻlovlar','cr')}${S('Mikrokredit, lombardlar','hg')}</div>
+ <div class="col">${S('Transport va taksi','bus')}${S('Tibbiyot','med')}${S('Boshqa toʻlovlar','dots')}</div></div>`}
+
+function svc(){return `<h1>Xizmatlar</h1>`+svcs.map(s=>`<div class="svc">${s[4]?'<i class="new">NEW</i>':''}<div class="dot" style="background:${s[0]};${s[0]==='#fff'?'box-shadow:0 0 0 1px #ddd':''}">${s[1]}</div><div><b>${s[2]}</b><span>${s[3]}</span></div><span class="ch">${ic('ch')}</span></div>`).join('')}
+
+Object.assign(I,{
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7z"/>',
+ chat:'<path d="M12 4c5 0 9 3 9 7s-4 7-9 7c-1 0-2-.1-3-.4L4 20l1-3.5C3.8 15.4 3 13.8 3 12c0-4 4-8 9-8z"/>',
+ book:'<rect x="6" y="3" width="13" height="18" rx="2"/><circle cx="12.5" cy="10" r="2"/><path d="M9 16c1-2 5-2 7 0M3 8h3M3 12h3M3 16h3"/>',
+ eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ eyo:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/>',
+ shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ ck:'<path d="M5 12.5l4.5 4.5L19 7"/>',
+ bk:'<path d="M20 12H5M11 6l-6 6 6 6"/>',
+ dn:'<path d="M12 4v15M6 13l6 6 6-6"/>',
+ dd:'<path d="M6 6l6 6 6-6M6 13l6 6 6-6"/>',
+ star:'<path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.2 9.4l6.1-.8z"/>',
+ doc:'<path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5"/>',
+ scan:'<path d="M4 8V4h4M16 4h4v4M4 16v4h4M16 20h4v-4M4 12h16"/>'
+});
+let hide=false,qs='',st=0,ot=0,am='',R=null,last=null,spent=0;
+const tpl=[],bal={p:1236700,h:37900},NONAV=['amount','confirm','done','scan'];
+const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+const KN={'2787':'MUHAMMADYUSUF D','7321':'MUHAMMADYUSUF D','3360':'MADINA N','0681':'E. D. I.','0539':'NOZIMA N','8218':'D. M. A.'};
+const FN=['ALISHER K','DILNOZA R','JASUR T','MALIKA S','SARDOR B','NILUFAR A'];
+const cards=[['4067 07** **** 7321','Muhammadyusuf D','#3b82f6','H'],['9860 12** **** 3360','Madina N','#0b2f73','H'],['5614 68** **** 0681','E. D. I.','#00c764','U'],['9860 16** **** 0539','Nozima N','#006b3f','H'],['7777 01** **** 8218','D. M. A.','#1db954','paynet']];
+const look=d=>KN[d.slice(-4)]||FN[[...d].reduce((a,c)=>a+ +c,0)%FN.length];
+const bc=d=>d.startsWith('7777')?['#1db954','paynet']:/^(8600|5614)/.test(d)?['#00c764','U']:d.startsWith('4067')?['#3b82f6','H']:['#0b2f73','H'];
+const cd=(c,t)=>`<div class="cd" style="background:${c}">${t}</div>`;
+const mask=d=>d.slice(0,4)+' '+d.slice(4,6)+'** **** '+d.slice(12);
+const com=()=>R.k==='uzqr'?0:Math.round(+am*0.009);
+const SRC=()=>cd('#1db954','paynet')+`<div>Paynet karta • 8218<small>${fmt(bal.p)} soʻm</small></div>${ic('ch')}`;
+const RCP=r=>r.k==='uzqr'?`<div class="cd" style="background:#0b2d8c;border-radius:50%;width:56px;height:56px">${r.logo||'UzQR'}</div><div>${r.name}<small>${r.sub}</small></div>`:`${cd(r.c[0],r.c[1])}<div>${r.name}<small>${r.sub}</small></div>${ic('ch')}`;
+const pair=a=>`<div class="wc">${SRC()}</div><div class="mid ${a}">${ic(a)}</div><div class="wc">${RCP(R)}</div>`;
+
+function home(){
+ const bl=hide?'••••••':fmt(bal.p+bal.h),hb=hide?'••••':null;
+ const sty=[['linear-gradient(160deg,#ff9a3c,#2d7ff9)','eSIM'],['linear-gradient(160deg,#f05a5a,#7bd88f)','Xitoyga pul oʻtkazmalari'],['linear-gradient(160deg,#e8742b,#a33a14)','Komissiyasiz oʻtkazmalar'],['linear-gradient(160deg,#caa46a,#6b4a22)','Inson uchun']];
+ const qk=[['▦','QR','scan'],['👛','Keshbek',''],['🪙','Tangalar',''],['🔄','Xolis',''],['₿','Kripto','']];
+ return `<div class="hd"><div class="row"><div class="av">${ic('user')}</div><div style="flex:1"><b style="font-size:24px;font-weight:600">Muhammadyusuf ›</b><br><span class="bdg">${ic('shield')}Himoyalangan</span></div>${ic('chat')}</div>
+<div style="margin-top:20px;color:var(--mute);font-size:18px">≡ Umumiy balans</div>
+<div class="bal"><span>${bl} <em>soʻm</em></span><span data-a="eye" style="cursor:pointer">${ic(hide?'eyo':'eye')}</span></div>
+<div class="fk" data-a="search">Kartaga oʻtkazma ${ic('book')}</div>
+<div class="stories">${sty.map(s=>`<div class="story" style="background:${s[0]}">${s[1]}</div>`).join('')}</div></div>
+<div class="qks">${qk.map(q=>`<div class="qk" ${q[2]?`data-a="${q[2]}"`:''}><i>${q[0]}</i>${q[1]}</div>`).join('')}</div>
+<div class="pn"><div class="ph2"><span>Kartalarim <span class="cnt">2</span>›</span><span class="add">${ic('plus')}Qoʻshish</span></div>
+<div class="cr">${cd('#1db954','paynet')}<div><b>${hb||fmt(bal.p)} soʻm</b><small>• 8218 Paynet karta</small></div>${ic('ch')}</div>
+<div class="cr">${cd('#0aa3b5','H')}<div><b>${hb||fmt(bal.h)} soʻm</b><small>• 7321 Smart Bank</small></div>${ic('ch')}</div></div>
+<div class="pn"><div class="ph2"><span>Mening uylarim ›</span><span class="add">${ic('plus')}Qoʻshish</span></div>
+<div class="cr"><b>Mening uyim</b>${ic('ch')}</div>
+<div class="cr"><div class="cir" style="background:#e9edf1;font-size:22px">📱</div><div><b style="font-size:20px">Uyali aloqa</b><small>973352787</small></div><div style="margin-left:auto;text-align:right"><b style="font-size:20px">0 soʻm</b><small>Oxirgi toʻlov</small></div></div></div>
+<button class="cust">⚙ Asosiy ekranni sozlash</button>`}
+
+function otk(){
+ const rc=i=>`<div class="rc" data-a="pick" data-v="${i}"><div class="cir" style="background:${cards[i][2]}">${cards[i][3][0]}</div>${cards[i][1]}</div>`;
+ const rec=ot?(tpl.length?tpl.map((t,i)=>`<div class="rc" data-a="tplgo" data-v="${i}"><div class="cir" style="background:${t.c[0]}">${t.name[0]}</div>${t.name}</div>`).join(''):`<p class="hint">Shablonlar yoʻq. Oʻtkazmadan keyin «Shablonga qoʻshish» tugmasini bosing.</p>`):[1,2,0].map(rc).join('');
+ const ln=(i,c,t)=>`<div class="ln" data-a="search" data-v="0"><i style="background:${c}">${i}</i>${t}${ic('ch')}</div>`;
+ const fl=(f,t)=>`<div class="ln"><i class="fg">${f}</i>${t}${ic('ch')}</div>`;
+ return `<h1>Oʻtkazmalar</h1>
+<div class="inp" data-a="search"><span>Karta yoki telefon</span><span style="display:flex;gap:16px">${ic('book')}<span data-a="scan">${ic('scan')}</span></span></div>
+<div class="ban"><span>Koreyaga oʻtkazmalar uchun 0 soʻm komissiya</span><i>${ic('ch').replace('class="ic"','class="ic" style="stroke:#fff"')}</i></div>
+<div class="seg"><button class="${ot?'':'on'}" data-a="ot" data-v="0">Oxirgi</button><button class="${ot?'on':''}" data-a="ot" data-v="1">Shablon boʻyicha</button></div>
+<div class="rec">${rec}</div>
+<h2>Oʻtkazish</h2>
+<div class="g2"><div class="ot" data-a="search" data-v="1"><b>Oʻz kartalarimga</b><span>Paynet-karta, Humo, Uzcard</span><div class="lg"><i style="background:#f29a1d">HUMO</i><i style="background:#1c2c6b">U</i><i style="background:#1db954">paynet</i></div></div>
+<div class="ot"><b>ATTO kartaga</b><span>Avtobus, metro</span><div class="lg"><i style="background:#2b2f9e">ATTO</i></div></div></div>
+<div class="ot" style="margin-top:12px"><b>Visa Direct, Moneysend</b>${ln('VISA','#2236c9','Visa kartaga')}${ln('MC','#0d2f5e','Mastercard kartaga')}</div>
+<div class="ot" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center"><div><b>Xalqaro pul oʻtkazmalari</b><span>200 dan ortiq mamlakat</span></div><span style="font-size:60px;margin:0">🌍</span></div>
+<div class="ot" style="margin-top:12px"><b>Boshqa mamlakatlarga</b>${[['🇷🇺','Rossiya'],['🇰🇷','Koreya'],['🇨🇳','Xitoy'],['🇹🇷','Turkiya'],['🇹🇯','Tojikiston'],['🇰🇬','Qirgʻiziston']].map(c=>fl(c[0],c[1])).join('')}</div>`}
+
+function res(){
+ if(!qs)return (st?[0,4]:[0,1,2,3,4]).map(i=>`<div class="cw" data-a="pick" data-v="${i}">${cd(cards[i][2],cards[i][3])}<div><b>${cards[i][0]}</b><small>${cards[i][1]}</small></div>${ic('ch')}</div>`).join('');
+ if(qs.length===9||(qs.length===12&&qs.startsWith('998'))){const p=qs.slice(-9);return `<div class="cw" data-a="pickp">${cd('#3b82f6','☎')}<div><b>+998 ${p.slice(0,2)} ${p.slice(2,5)} ${p.slice(5,7)} ${p.slice(7)}</b><small>${look(qs)}</small></div>${ic('ch')}</div>`}
+ if(qs.length<16)return `<p class="hint">Karta raqamini toʻliq kiriting (${qs.length}/16)</p>`;
+ const b=bc(qs);
+ return `<div class="cw">${cd(b[0],b[1])}<div><b>${mask(qs)}</b><small>Karta raqami</small></div></div><div class="inp" style="cursor:text;margin-top:12px"><input id="nm" placeholder="Ism familiya" autocapitalize="words" value="${NM}"></div><button class="btn wide" data-a="pickq" style="margin-top:14px">Davom etish</button>`}
+function search(){
+ return `<div class="hdr"><span data-a="back">${ic('bk')}</span>Oʻtkazmalar</div>
+<div class="inp" style="cursor:text"><input id="q" inputmode="numeric" placeholder="Karta yoki telefon" value="${qs.replace(/(.{4})/g,'$1 ').trim()}"><span style="display:flex;gap:16px">${ic('book')}<span data-a="scan">${ic('scan')}</span></span></div>
+<div class="seg"><button class="${st?'':'on'}" data-a="st" data-v="0">Soʻnggi</button><button class="${st?'on':''}" data-a="st" data-v="1">Kartalarim</button></div>
+<div id="res">${res()}</div>`}
+
+function updAmt(){
+ const a=document.getElementById('amt'),q=R.k==='uzqr';
+ if(am){a.className='';a.textContent=fmt(am)}else{a.className='ph0';a.textContent=q?'100 - 44 000 000':'1 000 - 44 000 000'}
+ document.getElementById('cm').textContent='Komissiya '+(q?'0.0':'0.9')+'%'}
+function amount(){
+ const q=R.k==='uzqr',key=(v,c='')=>`<button class="${c}" data-a="k" data-v="${v}">${c?(v==='b'?'⌫':'✓'):v}</button>`;
+ return `<div class="fl"><div class="hdr"><span data-a="back">${ic('bk')}</span>${q?(R.l4==='QR'?'QR orqali toʻlov':'Toʻlov'):'Kartaga oʻtkazish'}</div>${pair('dn')}
+<div class="amb"><small>Siz ${q?'toʻlayapsiz':'oʻtkazyapsiz'}</small><div id="amt"></div></div><div class="cmn" id="cm"></div>
+<div class="chs">${[50000,100000,200000,500000].map(v=>`<button data-a="chip" data-v="${v}">${fmt(v)}</button>`).join('')}</div>
+${q?'':`<div class="tb">Tabriknoma qoʻshing<span class="add">${ic('plus')}</span></div>`}
+<div class="kp"><div class="kt"><span>${ic('grid')}</span><span>🎤</span></div>${['1','2','3'].map(v=>key(v)).join('')}<button class="rt" data-a="nop">–</button>${['4','5','6'].map(v=>key(v)).join('')}<button class="rt" data-a="nop">␣</button>${['7','8','9'].map(v=>key(v)).join('')}${key('b','rt')}<button data-a="nop">,</button>${key('0')}<button data-a="nop">.</button>${key('ok','rt')}</div></div>`}
+function cnf(){
+ const q=R.k==='uzqr',c=com(),a=+am;
+ return `<div class="fl"><div class="hdr"><span data-a="back">${ic('bk')}</span>${q?'Toʻlovni tasdiqlash':'Oʻtkazmani tasdiqlash'}</div>${pair('dd')}
+<div class="dr" style="border-top:1px solid var(--line);margin-top:22px"><small>Siz ${q?'toʻlayapsiz':'oʻtkazyapsiz'}</small><div>${fmt(a)} soʻm</div><small>Komissiya</small><div>${c} soʻm</div><small>Kartadan yechib olinadi</small><div>${fmt(a+c)} soʻm</div></div>
+<p style="margin-top:auto;text-align:center;color:var(--mute);padding:20px 0 14px">Komissiya ${q?'0.0':'0.9'}%</p><button class="btn wide" data-a="send">${q?'Toʻlash':'Oʻtkazish'}</button></div>`}
+function done(){
+ const r=last.R,q=r.k==='uzqr';
+ return `<div class="fl"><div class="hdr" style="justify-content:center;font-weight:500">${q?'Toʻlov amalga oshirildi':'Oʻtkazma yuborildi'}</div>
+<div class="okc">${ic('ck')}</div><div class="amn">${fmt(last.a)} <em>soʻm</em></div>${q?'':`<span class="pl">Komissiya ${last.c} soʻm</span>`}
+<div class="wc" style="margin-top:26px">${q?RCP(r).split('<div>')[0]:cd(r.c[0],r.c[1])}<div><small>${r.name}</small>${q?r.sub:'• '+r.l4}</div><span class="pill">Bajarildi</span></div>
+${q?'':`<div class="cry"><div>Qonuniy kripto-hamyonni oching<br><button class="btn">Sinab koʻrish ›</button></div><span style="font-size:56px">🪙</span></div>`}
+<div class="acts"><div ${q?'':'data-a="tpl"'}>${ic('star')}<br>Shablonga qoʻshish</div><div data-a="tdet">${ic('doc')}<br>Oʻtkazma tafsilotlari</div></div>
+<button class="btn wide" data-a="done">Tayyor</button></div>`}
+function scan(){
+ return `<div class="sc"><div class="hdr"><span data-a="back">${ic('bk')}</span>QR skaner</div><div class="vf"></div><p>Istalgan QR-kodni ramka ichiga joylashtiring. Karta raqami yoki ism soʻralmaydi, faqat UzQR koʻrsatiladi.</p><button class="btn" data-a="scanok">Skanerlash</button></div>`}
+const SC={search,amount,confirm:cnf,done,scan};
+
+function ok(){
+ const a=+am,mn=R.k==='uzqr'?100:1000;
+ if(a<mn)return toast('Minimal summa '+fmt(mn)+' soʻm');
+ if(a>44000000)return toast('Maksimal summa 44 000 000 soʻm');
+ if(a+com()>bal.p)return toast('Kartada mablagʻ yetarli emas');
+ scr={n:'confirm'};render()}
+function act(a,v){
+ if(a==='eye'){hide=!hide;render()}
+ else if(a==='search'){scr={n:'search'};tab=1;qs='';NM='';st=+v||0;render();const q=document.getElementById('q');q&&q.focus()}
+ else if(a==='st'){st=+v;render();const q=document.getElementById('q');q&&q.focus()}
+ else if(a==='ot'){ot=+v;render()}
+ else if(a==='back'){const n=scr&&scr.n;scr=n==='confirm'?{n:'amount'}:n==='amount'?(R.k==='uzqr'?(R.l4==='QR'?{n:'scan'}:{n:'svp'}):{n:'search'}):null;render()}
+ else if(a==='pick'){const c=cards[+v];R={k:'card',name:c[1].toUpperCase(),sub:c[0],l4:c[0].slice(-4),c:[c[2],c[3]]};am='';scr={n:'amount'};render()}
+ else if(a==='pickp'){const p=qs.slice(-9);R={k:'card',name:look(qs),sub:'+998 '+p.slice(0,2)+' '+p.slice(2,5)+' '+p.slice(5,7)+' '+p.slice(7),l4:p.slice(-4),c:['#3b82f6','☎']};am='';scr={n:'amount'};render()}
+ else if(a==='rcp'){scr={n:'rcp',x:HR[+v]};render()}
+ else if(a==='svc'){SVN=v;SP=0;SNUM='';scr={n:'svp'};render()}
+ else if(a==='sp'){SP=+v;render()}
+ else if(a==='svcgo'){if(!SNUM.trim())return toast('Raqamni kiriting');const pv=sv(SVN)[1][SP];R={k:'uzqr',name:pv,sub:SNUM,l4:'SV',logo:pv.slice(0,2).toUpperCase()};am='';scr={n:'amount'};render()}
+ else if(a==='pickq'){if(!NM.trim())return toast('Ism familiyani kiriting');R={k:'card',name:NM.trim().toUpperCase(),sub:mask(qs),l4:qs.slice(-4),c:bc(qs)};am='';scr={n:'amount'};render()}
+ else if(a==='tplgo'){R=tpl[+v];am='';scr={n:'amount'};render()}
+ else if(a==='scan'){scr={n:'scan'};render()}
+ else if(a==='scanok'){toast('QR-kod oʻqildi');R={k:'uzqr',name:'UzQR',sub:'QR orqali toʻlov',l4:'QR'};am='';scr={n:'amount'};render()}
+ else if(a==='chip'){am=String(v);updAmt()}
+ else if(a==='k'){if(v==='ok')return ok();if(v==='b')am=am.slice(0,-1);else if(am&&(am+v).length<=8)am+=v;else if(!am&&v[0]!=='0')am=v;updAmt()}
+ else if(a==='send'){
+  const x=+am,c=com(),d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  spent+=x+c;
+  if(out[0][0]==='Bugun')out[0][0]='';out.unshift(['Bugun',R.name,R.k==='uzqr'?(R.l4==='QR'?'UzQR':R.name)+' •8218':'Chiquvchi oʻtkazma •8218','−'+fmt(x+c),hm,R.l4==='QR'?'q':'o']);
+  last={R,a:x,c};SAVED.push([new Date().toLocaleDateString('sv'),out[0][1],out[0][2],out[0][3],out[0][4],out[0][5]]);persist();scr={n:'done'};render()}
+ else if(a==='tpl'){if(!tpl.some(t=>t.l4===R.l4))tpl.push(R);persist();toast('Shablonga qoʻshildi')}
+ else if(a==='tdet')toast();
+ else if(a==='done'){scr=null;tab=0;render()}}
+document.addEventListener('input',e=>{if(e.target.id==='nm'){NM=e.target.value;return}if(e.target.id==='sn'){SNUM=e.target.value;return}if(e.target.id!=='q')return;const d=e.target.value.replace(/\D/g,'').slice(0,16);qs=d;e.target.value=d.replace(/(.{4})/g,'$1 ').trim();document.getElementById('res').innerHTML=res()});
+let HR=[],CUR='',SVN='',SP=0,SNUM='',CAM=null,NM='';
+const SV={'Mobil aloqa':['Telefon raqami',['Ucell','Beeline','Uzmobile','Mobiuz']],'Internet va TV':['Abonent raqami',['Uztelecom','Sarkor','EVO','Comnet']],'Kommunal':['Shaxsiy hisob raqami',['Elektr energiya','Tabiiy gaz','Suv','Chiqindi']],'Davlat':['Hisob yoki jarima raqami',['YHXB jarimalari','Soliq','Davlat boji']],'Talim':['Talaba yoki shartnoma raqami',['Universitet','Maktab','Kurslar']]};
+const sv=v=>{const k=Object.keys(SV).find(k=>k.slice(0,2)===v.slice(0,2));return SV[k]||['Hisob raqami',[v]]};
+function svp(){const c=sv(SVN);
+ return `<div class="hdr"><span data-a="back">${ic('bk')}</span>${SVN}</div>
+<div class="seg" style="flex-wrap:wrap;border-radius:26px">${c[1].map((p,i)=>`<button class="${i===SP?'on':''}" data-a="sp" data-v="${i}">${p}</button>`).join('')}</div>
+<div class="inp" style="cursor:text"><input id="sn" placeholder="${c[0]}" value="${SNUM}"></div><p class="hint">${c[0]}ni kiriting</p>
+<button class="btn wide" data-a="svcgo">Davom etish</button>`}
+function rcpt(){const r=scr.x[0],d=scr.x[1],inc=r[3][0]==='+',id=(r[4]+d).replace(/\D/g,'').padEnd(10,'7').slice(0,10);
+ const row=(a,b)=>`<div class="dr"><small>${a}</small><div>${b}</div></div>`;
+ return `<div class="hdr"><span data-a="back">${ic('bk')}</span>Operatsiya tafsilotlari</div>
+<div class="okc" style="margin:14px auto 18px;background:${inc?'var(--green)':'#0b2d8c'};font-size:34px;color:#fff">${inc?'↙':'↗'}</div>
+<div class="amn ${inc?'pos':''}" style="font-size:42px">${r[3]} <em>soʻm</em></div><span class="pl" style="color:var(--green)">Bajarildi</span>
+<div style="margin-top:20px;border-top:1px solid var(--line)">${row(inc?'Yuboruvchi':'Oluvchi',r[1])}${row('Turi',r[2])}${row('Sana va vaqt',(d||'Bugun')+', '+r[4])}${row('Chek raqami','№ '+id)}</div>`}
+SC.svp=svp;SC.rcp=rcpt;
+async function startCam(){
+ try{const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+  if(!(scr&&scr.n==='scan')){s.getTracks().forEach(t=>t.stop());return}
+  CAM=s;const vf=document.querySelector('.vf'),v=document.createElement('video');
+  v.srcObject=s;v.muted=true;v.setAttribute('playsinline','');v.style.cssText='width:100%;height:100%;object-fit:cover';vf.appendChild(v);await v.play();
+  if('BarcodeDetector' in window){const bd=new BarcodeDetector({formats:['qr_code']});
+   const tick=async()=>{if(!CAM)return;try{const r=await bd.detect(v);if(r.length){act('scanok');return}}catch(e){}setTimeout(tick,300)};tick()}
+ }catch(e){}}
+const SK='paynet_maket_v3',SAVED=[],MN=['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+function persist(){try{localStorage.setItem(SK,JSON.stringify({p:bal.p,h:bal.h,s:spent,r:SAVED,t:tpl}))}catch(e){}}
+(function(){try{const d=JSON.parse(localStorage.getItem(SK)||'null');if(!d)return;
+ bal.p=d.p;bal.h=d.h;spent=d.s||0;(d.t||[]).forEach(t=>tpl.push(t));(d.r||[]).forEach(r=>SAVED.push(r));
+ const t0=new Date().toDateString();let prev='';
+ const rows=[...SAVED].reverse().map(r=>{const dt=new Date(r[0]+'T00:00'),l=dt.toDateString()===t0?'Bugun':dt.getDate()+'-'+MN[dt.getMonth()],h=l!==prev?l:'';prev=l;return [h,r[1],r[2],r[3],r[4],r[5]]});
+ if(prev==='Bugun')out[0][0]='';out.unshift(...rows)}catch(e){}})();
+const ph=n=>n[0]==='A'?home():n[0]==='O'?otk():`<h1>${n}</h1><div class="ph">Bu ekran skrinshotlarda yoʻq edi. Uning skrinshotini yuborsangiz, qoʻshib beraman.</div>`;
+
+function render(){
+ const v=document.getElementById('v');
+ v.innerHTML=[ph('Asosiy'),ph('Oʻtkazmalar'),pay(),hist(),svc()][tab];
+ if(scr)v.innerHTML=SC[scr.n]();v.className=scr?'fx':'';if(scr&&scr.n==='amount')updAmt();if(CAM&&!(scr&&scr.n==='scan')){CAM.getTracks().forEach(t=>t.stop());CAM=null}if(scr&&scr.n==='scan')startCam();v.scrollTop=0;document.getElementById('nav').style.display=scr&&NONAV.includes(scr.n)?'none':'flex';
+ document.getElementById('nav').innerHTML=tabs.map((t,i)=>`<button class="${i===tab?'on':''}" data-t="${i}"><span class="p">${ic(t[0])}</span>${t[1]}${i===4?'<span class="bd"></span>':''}</button>`).join('');
+}
+let tm;
+function toast(m){const e=document.getElementById('toast');e.textContent=m||'Bu maket: amal bajarilmaydi';e.classList.add('show');clearTimeout(tm);tm=setTimeout(()=>e.classList.remove('show'),1400)}
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-t]'),f=e.target.closest('[data-f]');
+ const ac=e.target.closest('[data-a]');if(ac){act(ac.dataset.a,ac.dataset.v);return}if(t){scr=null;tab=+t.dataset.t;render()}
+ else if(f){flt=f.dataset.f;const s=document.getElementById('v').scrollTop;render();document.getElementById('v').scrollTop=s}
+ else if(e.target.closest('.btn,.svc,.tile,.tx,.ot,.story,.qk,.cr,.cust,.fk,.ban,.rc,.ln'))toast();
+});
+render();
+</script>
+</body>
+</html>
