@@ -1,0 +1,6 @@
+{
+  "appId": "com.paynet.app",
+  "appName": "PAYNET",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
